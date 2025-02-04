@@ -1,4 +1,4 @@
-# structured-infix
+# structured infix
 
 infix notation with precedence expressed structurally
 
