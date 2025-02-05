@@ -33,24 +33,22 @@ def execOp(op, a, b, o)
 end
 
 def sinfix(expression, opinionated=true)
+  return 0   if !(/[0-9]+([+\-*^]+[0-9]+)*/ =~ expression)
   expression += "\u0000"
   expression = expression.each_char.to_a.filter {|x| !(/[ \t\n]/=~ x) }.join
   e          = expression.each_char
-  value      = 0
-  while true do
+  value      = getNumber(e)
+  loop {
     break if e.peek == "\u0000"
-    if isDigit?(e.peek)
-      value = getNumber(e)
-    else
-      # consume operator and its operand
-      operator  = e.next
-      theNumber = getNumber(e)
-      value = execOp(operator, value, theNumber, opinionated)
-    end
-  end
+    # consume transformations
+    operator  = e.next
+    theNumber = getNumber(e)
+    value = execOp(operator, value, theNumber, opinionated)
+  }
   return value
 end
 
+p sinfix '15'                 # => 15
 p sinfix '3 * 4 + 2'          # => 14
 p sinfix '2 + 3 * 4'          # => 20
 p sinfix '3 * 4 + 2 ^ 5 * 10' # => 5378240
