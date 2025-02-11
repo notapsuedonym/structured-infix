@@ -33,7 +33,7 @@ def execOp(op, a, b, o)
 end
 
 def sinfix(expression, opinionated=true)
-  return 0   if !(/^[0-9]+([\s]*[+\-*^\/]+[\s]*[0-9]+)*$/ =~ expression)
+  return 0   if /^[0-9]+([\s]*[+\-*^\/]+[\s]*[0-9]+)*$/ !~ expression
   expression += "\u0000"
   expression = expression.each_char.to_a.filter {|x| !(/[\s]/=~ x) }.join
   e          = expression.each_char
